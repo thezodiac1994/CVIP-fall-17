@@ -1,0 +1,33 @@
+function [ warp_im ] = warpA( im, A, out_size )
+% warp_im=warpAbilinear(im, A, out_size)
+% Warps (w,h,1) image im using affine (3,3
+im_new = zeros(out_size(1),out_size(2));
+AI = inv(A)';
+T = A
+for i=1:out_size(1)
+    for j = 1:out_size(2)
+        dest = [i;j;1];
+        reposition = AI*dest-T;
+        
+        ii = round(reposition(1,1));
+        jj = round(reposition(2,1));
+ %       fprintf('%d %d --> %d %d\n',i,j,ii,jj);
+        if ii>0 && ii<size(im,1) && jj>0 && jj<size(im,2)
+           im_new (i,j) = im(ii,jj);      
+    
+        end
+    end
+end
+
+warp_im = im_new;
+
+end
+% producing (out_size(1),out_size(2)) output image warp_im
+% with warped  = A*input, warped spanning 1..out_size
+% Uses nearest neighbor mapping.
+% INPUTS:
+%   im : input image
+%   A : transformation matrix 
+%   out_size : size the output image should be
+% OUTPUTS:
+%   warp_im : result of warping im by A
