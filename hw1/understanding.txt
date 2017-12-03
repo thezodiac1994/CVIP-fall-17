@@ -1,0 +1,6 @@
+1) took responses of the image at alpha random points for the filters 
+2) used k means to club same responses together into same cluster to create dictionary 
+3) Find visual words ==> represent the images using the words in the dictionary
+4) Save histograms of the visual words in training set 
+5) For an incoming image, make its histogram and compare it to all the other histograms and use some technique like knn for histogram matching 
+
